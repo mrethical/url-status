@@ -122,11 +122,11 @@ class UrlStatus
                 }
             ]
             + $settings
+            + $this->settings->getSettings()
             + [
                 CURLOPT_HEADER => true,
                 CURLOPT_NOBODY => true,
             ]
-            + $this->settings->getSettings()
         );
         curl_exec($curl);
         $this->code = curl_getinfo($curl, CURLINFO_HTTP_CODE);

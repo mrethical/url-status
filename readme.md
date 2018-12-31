@@ -21,7 +21,7 @@ composer require muffeen/url-status
 
 Refer to the example below:
 ```php
-use Muffeen\UrlStatus\UrlStatus
+use Muffeen\UrlStatus\UrlStatus;
 
 $url_status = UrlStatus::get('http://www.example.com');
 $http_status_code = $url_status->getStatusCode();
@@ -29,8 +29,8 @@ $response_headers = $url_status->getResponseHeaders();
 ```
 Feel free to view the code on how you can extend the options how you can extend the way you run your request. Another example below is how you would want to change user agent of the request.
 ```php
-use Muffeen\UrlStatus\Settings
-use Muffeen\UrlStatus\UrlStatus
+use Muffeen\UrlStatus\Settings;
+use Muffeen\UrlStatus\UrlStatus;
 
 $settings = new Settings([
     'CURLOPT_USERAGENT' => '<user-agent-here>',

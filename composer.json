@@ -1,6 +1,6 @@
 {
   "name": "muffeen/url-status",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Check or ping urls for http response/status codes.",
   "keywords": ["php", "url", "link", "status code", "ping"],
   "homepage": "https://github.com/muffeen/url-status",

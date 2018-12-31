@@ -106,8 +106,6 @@ class UrlStatus
             [
                 CURLOPT_URL => $this->url,
                 CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_HEADER => true,
-                CURLOPT_NOBODY => true,
                 CURLOPT_HEADERFUNCTION => function ($curl, $header) {
                     $len = strlen($header);
                     $header = explode(':', $header, 2);
@@ -124,6 +122,10 @@ class UrlStatus
                 }
             ]
             + $settings
+            + [
+                CURLOPT_HEADER => true,
+                CURLOPT_NOBODY => true,
+            ]
             + $this->settings->getSettings()
         );
         curl_exec($curl);

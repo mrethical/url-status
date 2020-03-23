@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Jefferson Magboo <jeff_magboo19@yahoo.com>
+ * (c) Jefferson Magboo <jeffersonmagboo21@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.

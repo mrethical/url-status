@@ -1,20 +1,24 @@
 {
   "name": "muffeen/url-status",
-  "version": "0.1.2",
   "description": "Check or ping urls for http response/status codes.",
-  "keywords": ["php", "url", "link", "status code", "ping"],
-  "homepage": "https://github.com/muffeen/url-status",
-  "type": "library",
-  "license": "MIT",
+  "keywords": [
+    "php",
+    "url",
+    "link",
+    "status code",
+    "ping"
+  ],
+  "homepage": "https://github.com/mrethical/url-status",
   "authors": [
     {
       "name": "Jefferson Magboo",
       "email": "jeff_magboo19@yahoo.com"
     }
   ],
-  "minimum-stability": "dev",
+  "type": "library",
+  "license": "MIT",
   "require": {
-    "php": ">=5.5.0",
+    "php": ">=5.6",
     "ext-curl": "*",
     "ext-json": "*"
   },
@@ -22,5 +26,11 @@
     "psr-4": {
       "Muffeen\\UrlStatus\\": "src/"
     }
-  }
+  },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

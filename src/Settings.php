@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Jefferson Magboo <jeff_magboo19@yahoo.com>
+ * (c) Jefferson Magboo <jeffersonmagboo21@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -39,7 +39,9 @@ class Settings
     private static function getDefaultUserAgent()
     {
         $package_info = Settings::getPackageInfo();
-        return 'url-status/'.$package_info['version'].' (+'.$package_info['homepage'].')';
+        $version = isset($package_info['version']) ? $package_info['version'] : 'dev-master';
+
+        return 'url-status/'.$version.' (+'.$package_info['homepage'].')';
     }
 
     /**

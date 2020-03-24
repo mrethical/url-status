@@ -9,7 +9,7 @@ This package can be used to retrieve http status code of a particular url, as we
 
 ## Requirements
 
-This package only requires php curl and json extensions. PHP requirement is 5.6+.
+This package only requires php curl and json extensions. PHP requirement is 5.3+.
 
 ## Installation
 
@@ -30,14 +30,11 @@ $response_headers = $url_status->getResponseHeaders();
 ```
 Extend your request by using curl options constants. The example below show how can you set a user agent for your request.
 ```php
-use Muffeen\UrlStatus\Settings;
 use Muffeen\UrlStatus\UrlStatus;
 
-$settings = new Settings([
+$url_status = UrlStatus::get('http://www.example.com', array(
     CURLOPT_USERAGENT => '<user-agent-here>',
-]);
-
-$url_status = UrlStatus::get('http://www.example.com', $settings);
+));
 $http_status_code = $url_status->getStatusCode();
 $response_headers = $url_status->getResponseHeaders();
 ```

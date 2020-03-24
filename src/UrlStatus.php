@@ -19,11 +19,14 @@ class UrlStatus
     protected $url;
 
     /**
-     * Request settings.
+     * Request options.
      *
-     * @var Settings
+     * @var array
      */
-    protected $settings;
+    protected $options = array(
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT => 30,
+    );
 
     /**
      * HTTP status code.
@@ -37,7 +40,7 @@ class UrlStatus
      *
      * @var array
      */
-    protected $headers;
+    protected $headers = array();
 
     /**
      * Redirect url.
@@ -49,14 +52,13 @@ class UrlStatus
     /**
      * UrlStatus constructor.
      *
-     * @param $url
-     * @param Settings|null $settings
+     * @param  string $url
      */
-    public function __construct($url, Settings $settings = null)
+    public function __construct($url)
     {
         $this->url = $url;
-        $this->settings = !is_null($settings) ? $settings : new Settings();
-        $this->headers = [];
+
+        $this->options[CURLOPT_USERAGENT] = self::getDefaultUserAgent();
     }
 
     /**
@@ -80,59 +82,76 @@ class UrlStatus
     }
 
     /**
-     * Get url status details for a given url.
+     * Set curl options.
      *
-     * @param $url
-     * @param Settings|null $settings
+     * @param  array $options
      * @return UrlStatus
      */
-    public static function get($url, Settings $settings = null)
+    public function setCurlOptions($options)
     {
-        $status = new self($url, $settings);
-        return $status->runRequest();
+        $this->options = $options + $this->options;
+
+        return $this;
     }
 
     /**
      * Run url request.
      *
-     * @param array $settings
+     * @param  array $options
      * @return $this
      */
-    protected function runRequest(array $settings = [])
+    protected function runRequest(array $options = array())
     {
+        $self = $this;
         $curl = curl_init();
         curl_setopt_array(
             $curl,
-            [
-                CURLOPT_URL => $this->url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_HEADERFUNCTION => function ($curl, $header) {
-                    $len = strlen($header);
-                    $header = explode(':', $header, 2);
-                    if (count($header) < 2) {
+            (
+                array(
+                    CURLOPT_URL => $this->url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_HEADERFUNCTION => function ($curl, $header) use ($self) {
+                        $len = strlen($header);
+                        $header = explode(':', $header, 2);
+                        if (count($header) < 2) {
+                            return $len;
+                        }
+                        $name = strtolower(trim($header[0]));
+                        if (!array_key_exists($name, $self->headers)) {
+                            $self->headers[$name] = array(trim($header[1]));
+                        } else {
+                            $self->headers[$name][] = trim($header[1]);
+                        }
                         return $len;
-                    }
-                    $name = strtolower(trim($header[0]));
-                    if (!array_key_exists($name, $this->headers)) {
-                        $this->headers[$name] = [trim($header[1])];
-                    } else {
-                        $this->headers[$name][] = trim($header[1]);
-                    }
-                    return $len;
-                }
-            ]
-            + $settings
-            + $this->settings->getSettings()
-            + [
-                CURLOPT_HEADER => true,
-                CURLOPT_NOBODY => true,
-            ]
+                    },
+                ) +
+                $options +
+                $this->options +
+                array(
+                    CURLOPT_HEADER => true,
+                    CURLOPT_NOBODY => true
+                )
+            )
         );
         curl_exec($curl);
-        $this->code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $this->code = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         $this->redirect_url = curl_getinfo($curl, CURLINFO_REDIRECT_URL);
         curl_close($curl);
         return $this;
+    }
+
+    /**
+     * Get url status details for a given url.
+     *
+     * @param  string $url
+     * @param  array $options
+     * @return UrlStatus
+     */
+    public static function get($url, $options = array())
+    {
+        $status = new self($url);
+        $status->options = $options + $status->options;
+        return $status->runRequest();
     }
 
     /**
@@ -142,6 +161,29 @@ class UrlStatus
      */
     public function followRedirect()
     {
-        return $this->redirect_url ? $this->runRequest([CURLOPT_FOLLOWLOCATION => true]): $this;
+        return $this->redirect_url ? $this->runRequest(array(CURLOPT_FOLLOWLOCATION => true)): $this;
+    }
+
+    /**
+     * Get package information of this library.
+     *
+     * @return mixed
+     */
+    private static function getPackageInfo()
+    {
+        return json_decode(file_get_contents(__DIR__.'/../composer.json'), true);
+    }
+
+    /**
+     * Generate a default user agent for request.
+     *
+     * @return string
+     */
+    private static function getDefaultUserAgent()
+    {
+        $package_info = self::getPackageInfo();
+        $version = isset($package_info['version']) ? $package_info['version'] : 'dev-master';
+
+        return 'url-status/'.$version.' (+'.$package_info['homepage'].')';
     }
 }

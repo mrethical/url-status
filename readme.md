@@ -1,5 +1,6 @@
 
 ## URL Status Code Checker
+[![Build Status](https://img.shields.io/travis/mrethical/url-status/master.svg?style=flat-square)](https://travis-ci.org/mrethical/url-status)
 
 This package can be used to retrieve http status code of a particular url, as well as its headers.
 

@@ -1,1 +1,3 @@
 preset: laravel
+disabled:
+  -  short_array_syntax

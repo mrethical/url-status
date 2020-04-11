@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Jefferson Magboo <jeffersonmagboo21@gmail.com>
+ * (c) Jefferson Magboo <jeffersonmagboo21@gmail.com>.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -117,11 +117,12 @@ class UrlStatus
                             return $len;
                         }
                         $name = strtolower(trim($header[0]));
-                        if (!array_key_exists($name, $self->headers)) {
+                        if (! array_key_exists($name, $self->headers)) {
                             $self->headers[$name] = array(trim($header[1]));
                         } else {
                             $self->headers[$name][] = trim($header[1]);
                         }
+
                         return $len;
                     },
                 ) +
@@ -129,7 +130,7 @@ class UrlStatus
                 $this->options +
                 array(
                     CURLOPT_HEADER => true,
-                    CURLOPT_NOBODY => true
+                    CURLOPT_NOBODY => true,
                 )
             )
         );
@@ -137,6 +138,7 @@ class UrlStatus
         $this->code = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         $this->redirect_url = curl_getinfo($curl, CURLINFO_REDIRECT_URL);
         curl_close($curl);
+
         return $this;
     }
 
@@ -151,6 +153,7 @@ class UrlStatus
     {
         $status = new self($url);
         $status->options = $options + $status->options;
+
         return $status->runRequest();
     }
 
@@ -161,7 +164,7 @@ class UrlStatus
      */
     public function followRedirect()
     {
-        return $this->redirect_url ? $this->runRequest(array(CURLOPT_FOLLOWLOCATION => true)): $this;
+        return $this->redirect_url ? $this->runRequest(array(CURLOPT_FOLLOWLOCATION => true)) : $this;
     }
 
     /**

@@ -1,7 +1,5 @@
 
-## URL Status Code Checker
-[![Build Status](https://img.shields.io/travis/mrethical/url-status/master.svg?style=flat-square)](https://travis-ci.com/mrethical/url-status)
-[![StyleCI](https://github.styleci.io/repos/163670312/shield?branch=master)](https://github.styleci.io/repos/163670312)
+# URL Status Code Checker
 
 This package can be used to retrieve http status code of a particular url, as well as its headers.
 
@@ -26,19 +24,19 @@ Refer to the example below:
 ```php
 use Muffeen\UrlStatus\UrlStatus;
 
-$url_status = UrlStatus::get('http://www.example.com');
-$http_status_code = $url_status->getStatusCode();
-$response_headers = $url_status->getResponseHeaders();
+$urlStatus = UrlStatus::get('http://www.example.com');
+$httStatusCode = $urlStatus->getStatusCode();
+$responseHeaders = $urlStatus->getResponseHeaders();
 ```
 Extend your request by using curl options constants. The example below show how can you set a user agent for your request.
 ```php
 use Muffeen\UrlStatus\UrlStatus;
 
-$url_status = UrlStatus::get('http://www.example.com', array(
+$urlStatus = UrlStatus::get('http://www.example.com', array(
     CURLOPT_USERAGENT => '<user-agent-here>',
 ));
-$http_status_code = $url_status->getStatusCode();
-$response_headers = $url_status->getResponseHeaders();
+$httStatusCode = $urlStatus->getStatusCode();
+$responseHeaders = $urlStatus->getResponseHeaders();
 ```
 
 ## License

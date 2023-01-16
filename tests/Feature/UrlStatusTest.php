@@ -11,7 +11,7 @@ class UrlStatusTest extends TestCase
     protected $redirectionTestSite = 'http://google.com';
 
     /** @test */
-    public function _can_get_status_code()
+    public function can_get_status_code()
     {
         $response = UrlStatus::get($this->testSite);
         $this->assertEquals(200, $response->getStatusCode());

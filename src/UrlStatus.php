@@ -52,7 +52,7 @@ class UrlStatus
     /**
      * UrlStatus constructor.
      *
-     * @param  string $url
+     * @param  string  $url
      */
     public function __construct($url)
     {
@@ -84,7 +84,7 @@ class UrlStatus
     /**
      * Set curl options.
      *
-     * @param  array $options
+     * @param  array  $options
      * @return UrlStatus
      */
     public function setCurlOptions($options)
@@ -97,7 +97,7 @@ class UrlStatus
     /**
      * Run url request.
      *
-     * @param  array $options
+     * @param  array  $options
      * @return $this
      */
     protected function runRequest(array $options = array())
@@ -145,8 +145,8 @@ class UrlStatus
     /**
      * Get url status details for a given url.
      *
-     * @param  string $url
-     * @param  array $options
+     * @param  string  $url
+     * @param  array  $options
      * @return UrlStatus
      */
     public static function get($url, $options = array())

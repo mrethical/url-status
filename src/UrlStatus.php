@@ -135,7 +135,7 @@ class UrlStatus
             )
         );
         curl_exec($curl);
-        $this->code = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        $this->code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $this->redirect_url = curl_getinfo($curl, CURLINFO_REDIRECT_URL);
         curl_close($curl);
 

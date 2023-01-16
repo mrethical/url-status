@@ -9,6 +9,6 @@
          stopOnFailure="false"
 >
     <testsuite name='Tests'>
-        <directory suffix=".php">/tests</directory>
+        <directory suffix=".php">tests</directory>
     </testsuite>
 </phpunit>

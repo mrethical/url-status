@@ -9,7 +9,7 @@ This package can be used to retrieve http status code of a particular url, as we
 
 ## Requirements
 
-This package only requires php curl and json extensions. PHP requirement is 5.3+.
+This package only requires php curl and json extensions. PHP requirement is 5.4+.
 
 ## Installation
 
